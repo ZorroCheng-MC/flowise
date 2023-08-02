@@ -1,0 +1,5 @@
+$ tsc && gulp
+[11:18:04] Requiring external module ts-node/register
+[11:18:06] Using gulpfile ~/Downloads/Flowise/packages/components/gulpfile.ts
+[11:18:06] Starting 'default'...
+[11:18:06] Finished 'default' after 65 ms

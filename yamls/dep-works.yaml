@@ -1,0 +1,45 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "flowise"
+  namespace: "default"
+  labels:
+    app: "flowise"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "flowise"
+  template:
+    metadata:
+      labels:
+        app: "flowise"
+    spec:
+      containers:
+      - name: "flowise-sha256-1"
+        image: "gcr.io/plated-analyzer-226005/flowise@sha256:01e8226d853caaf7a427746569ce171363e2c811d2f16b330af183a61b4bd3b9"
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "flowise-hpa-mez0"
+  namespace: "default"
+  labels:
+    app: "flowise"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "flowise"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
+
+
